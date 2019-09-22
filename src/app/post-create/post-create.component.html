@@ -1,1 +1,30 @@
-<h2>hello App</h2>
+<mat-card>
+    <form (submit)="save(postForm)" #postForm="ngForm">   <!--#postForm use to get objects in thi form ng model help to do that -->
+<mat-form-field>
+    <input matInput 
+    type="text"name="title"
+     ngModel
+     required
+     #title="ngModel"
+     >
+     <mat-error *ngIf="title.invalid">Please enter the title.</mat-error> 
+</mat-form-field>
+<mat-form-field>
+    <textarea matInput rows="4" 
+    name="content" 
+    ngModel
+    required
+   #content="ngModel"    
+    > <!-- give access to content in forms to #content -->
+</textarea>
+<mat-error *ngIf="content.invalid">Please enter the content.</mat-error> 
+ 
+</mat-form-field>
+<button mat-raised-button color="accent" type="submit">Save Post</button>
+</form>
+</mat-card> 
+
+
+<hr> 
+
+{{ newpost }}
