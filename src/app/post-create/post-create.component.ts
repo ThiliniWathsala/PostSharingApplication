@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Posts } from '../post.model';
+
 import { PostService } from '../post.service';
 
 
@@ -11,22 +11,22 @@ import { PostService } from '../post.service';
 })
 
 export class PostCreateComponent{
+
+    
+    enteredTitle:"";
+    enteredContent:"";
+  
     constructor(public postservice:PostService){
     
     }
 
-    enteredTitle:"";
-    enteredContent:"";
-  
 
-save(form:NgForm){
+    save(form:NgForm){
     if(form.invalid){
         return;
     }
-  
-
-    this.postservice.addPost(form.value.title,form.value.content);
-
-}
+   this.postservice.addPost(form.value.title,form.value.content);
+    form.resetForm();  // to reset the form 
+  }
 
 }

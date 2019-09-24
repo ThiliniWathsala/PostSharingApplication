@@ -10,6 +10,7 @@ import { PostCreateComponent } from './post-create/post-create.component';
 import {   HeaderComponent   } from './Header/header.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostService } from './post.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -31,7 +32,8 @@ import { PostService } from './post.service';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule  
+    MatExpansionModule ,
+    HttpClientModule 
 
     
   ],
