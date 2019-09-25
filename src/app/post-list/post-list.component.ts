@@ -38,7 +38,9 @@ ngOnDestroy(){
     this.postSub.unsubscribe();  // this is remove the subscrioption and prevent memory leaks
 }
 
- 
+onDelete(postId:string){
+    this.postservice.deletepost(postId);
+}
 
  
 }
