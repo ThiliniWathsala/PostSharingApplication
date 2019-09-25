@@ -46,9 +46,10 @@ export class PostService{
 
      addPost(title:string,content:string){
         const post:Posts={_id:null,title:title,content:content};
-        this.http.post<{message:string}>('http://localhost:3000/api/posts',post)
+        this.http.post<{message:string, postId:string}>('http://localhost:3000/api/posts',post)
         .subscribe((responseData)=>{
-            console.log(responseData.message);
+          const id=responseData. postId;
+          post._id=id;                            //override the id value in the above array
             this.posts.push(post);              //after recieve the success msg from backend add post to local array
             this.postUpdated.next([...this.posts]);
         })
