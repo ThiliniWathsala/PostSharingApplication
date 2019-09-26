@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs'
 import { Posts } from './post.model';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 //import{ map } from 'rxjs/Operators';
 
 
@@ -10,7 +11,7 @@ Injectable({providedIn:"root"})  // we inject it providers in app module.ts
 
 export class PostService{
             
-    constructor(private http:HttpClient){}
+    constructor(private http:HttpClient,private router:Router ){}
 
     private posts:Posts[]=[];
     private postUpdated=new Subject<Posts[]>();
@@ -47,7 +48,11 @@ export class PostService{
     upDatePost(id:string,title:string,content:string){
         const post:Posts={_id:id,title:title,content:content};
         this.http.put("http://localhost:3000/api/posts/"+id,post)
-        .subscribe(respose=>console.log(respose));
+        .subscribe(respose=>{console.log(respose);
+        this.router.navigate(["/"]);
+
+        
+    });
     } 
 
        
@@ -79,6 +84,7 @@ export class PostService{
           post._id=id;                            //override the id value in the above array
             this.posts.push(post);              //after recieve the success msg from backend add post to local array
             this.postUpdated.next([...this.posts]);
+            this.router.navigate(["/"]);
         });
        
      }
