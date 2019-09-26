@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs'
 import { Posts } from './post.model';
 import { HttpClient } from '@angular/common/http';
-import{ map } from 'rxjs/Operators';
+//import{ map } from 'rxjs/Operators';
 
 
 Injectable({providedIn:"root"})  // we inject it providers in app module.ts
@@ -22,7 +22,7 @@ export class PostService{
     getPost(){
        // return [...this.posts];  // this is a copy of old post:Post[].copy old array to new array and past it 
         this.http
-        .get<{message:string,posts:Posts[]}>('http://localhost:3000/api/posts')  //mesage and post back end eke dena variable ekama denna oni
+        .get<{message:string,posts:Posts[]}>("http://localhost:3000/api/posts")  //mesage and post back end eke dena variable ekama denna oni
         /*.pipe(map((postedData)=>{
             return postedData.posts.map(post=>{ 
                 return{
@@ -36,13 +36,40 @@ export class PostService{
             this.posts=transformedPosts.posts;   // post data has messages and post[] 
             this.postUpdated.next([...this.posts]);  // get the copy of updated posts array
           //  console.log(transformedData.message);
-        })
-        
+        });
+    }
 
-     }
+    getPosts(id:string ){
+        return{...this.posts.find(p=>p._id===id)};           //...(spead operator) used to get the all the property of object in old array and add it to new object
+    }
+
+ 
+    upDatePost(id:string,title:string,content:string){
+        const post:Posts={_id:id,title:title,content:content};
+        this.http.put("http://localhost:3000/api/posts/"+id,post)
+        .subscribe(respose=>console.log(respose));
+    } 
+
+       
+
+/*
+    updatePost(id:string,title:string,content:string){
+        const post:Posts = {
+                _id:id,  
+                title:title,
+                content:content 
+             };
+              this.http.put('http://localhost:3000/api/posts'+ id,post)
+             .subscribe((result)=>{
+              console.log(result);
+        }) 
+    }
+*/
+
         getPostUpdatelistener(){
         return this.postUpdated.asObservable();    // this is used to return updated post list
-    } 
+        } 
+
 
      addPost(title:string,content:string){
         const post:Posts={_id:null,title:title,content:content};
@@ -52,7 +79,7 @@ export class PostService{
           post._id=id;                            //override the id value in the above array
             this.posts.push(post);              //after recieve the success msg from backend add post to local array
             this.postUpdated.next([...this.posts]);
-        })
+        });
        
      }
 
@@ -62,7 +89,7 @@ export class PostService{
             const updatedPost=this.posts.filter(updatepost=>updatepost._id!==postId); // filetr used to filter the deleted post n this method update post without reloading
             this.posts=updatedPost;
             this.postUpdated.next([...this.posts]);
-        })
+        });
      }
 
 }
