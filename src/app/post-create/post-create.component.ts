@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { PostService } from '../post.service';
 import { Posts } from '../post.model';
-
+import { mimeType } from './mime-type.validator';
 
 @Component({
     selector:'app-postcreate',
@@ -39,7 +39,7 @@ export class PostCreateComponent implements OnInit{
         }),
 
         content: new FormControl(null,{validators:[Validators.required]}),
-        image:new FormControl(null,{validators:[Validators.required]})
+        image:new FormControl(null,{validators:[Validators.required],asyncValidators:[mimeType]})
     });
 
      //this is used to identify whether we hv id parameter or not(use same angular component but different postId s)
