@@ -4,7 +4,8 @@ import { Subject } from 'rxjs'
 import { Posts } from './post.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-//import{ map } from 'rxjs/Operators';
+
+import{ map } from 'rxjs/Operators';
 
 
 Injectable({providedIn:"root"})  // we inject it providers in app module.ts
@@ -24,17 +25,19 @@ export class PostService{
        // return [...this.posts];  // this is a copy of old post:Post[].copy old array to new array and past it 
         this.http
         .get<{message:string,posts:Posts[]}>("http://localhost:3000/api/posts")  //mesage and post back end eke dena variable ekama denna oni
-        /*.pipe(map((postedData)=>{
+        .pipe(map((postedData)=>{
             return postedData.posts.map(post=>{ 
                 return{
                     title:post.title,
                     content:post.content,
-                    id:post._id
+                    _id:post._id,
+                    imagePath:post.imagePath,
+
                 };
             });
-        }))*/
+        }))
         .subscribe((transformedPosts)=>{
-            this.posts=transformedPosts.posts;   // post data has messages and post[] 
+            this.posts=transformedPosts;   // post data has messages and post[] 
             this.postUpdated.next([...this.posts]);  // get the copy of updated posts array
           //  console.log(transformedData.message);
         });
@@ -46,7 +49,7 @@ export class PostService{
 
  
     upDatePost(id:string,title:string,content:string){
-        const post:Posts={_id:id,title:title,content:content};
+        const post:Posts={_id:id,title:title,content:content,imagePath:null};
         this.http.put("http://localhost:3000/api/posts/"+id,post)
         .subscribe(respose=>{console.log(respose);
         this.router.navigate(["/"]);
@@ -84,9 +87,14 @@ export class PostService{
 
 
 
-        this.http.post<{message:string, postId:string}>('http://localhost:3000/api/posts',postdata)
+        this.http.post<{message:string, post:Posts}>('http://localhost:3000/api/posts',postdata)
         .subscribe((responseData)=>{
-          const post:Posts={_id:responseData.postId,title:title,content:content};
+          const post:Posts={
+              _id:responseData.post._id,
+              title:title,
+              content:content,
+              imagePath:responseData.post.imagePath
+            };
 
           //const id=responseData. postId;
         //  post._id=id;                            //override the id value in the above array
