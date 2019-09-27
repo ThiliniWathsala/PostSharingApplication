@@ -76,12 +76,20 @@ export class PostService{
         } 
 
 
-     addPost(title:string,content:string){
-        const post:Posts={_id:null,title:title,content:content};
-        this.http.post<{message:string, postId:string}>('http://localhost:3000/api/posts',post)
+     addPost(title:string,content:string,image:File){
+        const postdata = new FormData();    //convert data to form data(json object ekak widihata files ywnna be)
+        postdata.append("title", title);
+        postdata.append("content",content);
+        postdata.append("image" , image, title);
+
+
+
+        this.http.post<{message:string, postId:string}>('http://localhost:3000/api/posts',postdata)
         .subscribe((responseData)=>{
-          const id=responseData. postId;
-          post._id=id;                            //override the id value in the above array
+          const post:Posts={_id:responseData.postId,title:title,content:content};
+
+          //const id=responseData. postId;
+        //  post._id=id;                            //override the id value in the above array
             this.posts.push(post);              //after recieve the success msg from backend add post to local array
             this.postUpdated.next([...this.posts]);
             this.router.navigate(["/"]);
