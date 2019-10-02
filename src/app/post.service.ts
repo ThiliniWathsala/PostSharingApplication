@@ -48,9 +48,27 @@ export class PostService{
     }
 
  
-    upDatePost(id:string,title:string,content:string){
-        const post:Posts={_id:id,title:title,content:content,imagePath:null};
-        this.http.put("http://localhost:3000/api/posts/"+id,post)
+    upDatePost(id:string,title:string,content:string,image:File | string){
+        //const post:Posts={_id:id,title:title,content:content,imagePath:null};
+        let postData:Posts | FormData;
+        if(typeof(image)==='object'){
+            postData= new FormData();
+            postData.append("_id",id);
+            postData.append("title",title);     //create form data object if send a file
+            postData.append("content",content);
+            postData.append("image",image,title);
+
+
+        }else{
+            postData={
+                _id:id,
+                title:title,
+                content:content,
+                imagePath:image
+            }
+
+        }
+        this.http.put("http://localhost:3000/api/posts/"+id,postData)
         .subscribe(respose=>{console.log(respose);
         this.router.navigate(["/"]);
 

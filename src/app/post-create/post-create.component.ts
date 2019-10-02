@@ -52,7 +52,8 @@ export class PostCreateComponent implements OnInit{
             this.post = this.postservice.getPosts(this.postId);
             this.form.setValue({
                 title:this.post.title,
-                content:this.post.content
+                content:this.post.content,
+                image:this.post.imagePath
             });
         }
         else{
@@ -106,7 +107,13 @@ export class PostCreateComponent implements OnInit{
         
     }
     else{
-        this.postservice.upDatePost(this.postId,this.form.value.title,this.form.value.content)
+        this.postservice.upDatePost(
+            this.postId,
+            this.form.value.title,
+            this.form.value.content,
+            this.form.value.image
+            
+            )
     }
     
       this.form.reset();  // to reset the form 
