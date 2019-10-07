@@ -16,6 +16,9 @@ import {   HeaderComponent   } from './Header/header.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostService } from './post.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthService } from './auth/auth.service';
 
 
 
@@ -25,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent,
+    SignupComponent
    
   ],
   imports: [
@@ -45,7 +50,8 @@ import { HttpClientModule } from '@angular/common/http';
     
   ],
   providers: [
-    PostService
+    PostService,
+    AuthService
   ],
   bootstrap: [AppComponent],
 
