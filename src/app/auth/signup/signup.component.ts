@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { AuthData } from '../auth-data.model';
+//import { AuthData } from '../auth-data.model';
 
 @Component({
     selector: 'app-signup',
@@ -20,9 +20,9 @@ export class SignupComponent{
         if(form.invalid){
             return;
         }
-
-      const authdata:AuthData={email:form.value.email , password : form.value.password};
-        this.authService.createUser(authdata.email , authdata.password);
+ 
+     // const authdata:AuthData={email:form.value.email , password :form.value.email};
+        this.authService.createUser(form.value.email ,form.value.email);
         
         console.log(form.value);
     }
