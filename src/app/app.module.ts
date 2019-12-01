@@ -15,10 +15,11 @@ import { PostCreateComponent } from './post-create/post-create.component';
 import {   HeaderComponent   } from './Header/header.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostService } from './post.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';  //HTTP_INTERCEPTORS  tocken identifier 
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthService } from './auth/auth.service';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 
@@ -50,8 +51,10 @@ import { AuthService } from './auth/auth.service';
     
   ],
   providers: [
+   
     PostService,
-    AuthService
+    AuthService,
+    {provide:HTTP_INTERCEPTORS,useClass : AuthInterceptor, multi:true},
   ],
   bootstrap: [AppComponent],
 

@@ -39,13 +39,14 @@ export class PostService{
         .subscribe((transformedPosts)=>{
             this.posts=transformedPosts;   // post data has messages and post[] 
             this.postUpdated.next([...this.posts]);  // get the copy of updated posts array
-          //  console.log(transformedData.message);
+            
+            // console.log(transformedData.message);
         });
     }
 
     getPosts(id:string ){
         return{...this.posts.find(p=>p._id===id)};           //...(spead operator) used to get the all the property of object in old array and add it to new object
-    }
+    } 
 
  
     upDatePost(id:string,title:string,content:string,image:File | string){

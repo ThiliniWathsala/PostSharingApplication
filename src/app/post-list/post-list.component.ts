@@ -26,7 +26,7 @@ constructor(public postservice:PostService){
     
 }
 
-ngOnInit(){
+ngOnInit(){  //meka image eka show krna method eka
   this.postservice.getPost();
   this.postSub = this.postservice.getPostUpdatelistener()  //get the resuls to postSub 
     .subscribe((posts:Posts[])=>{

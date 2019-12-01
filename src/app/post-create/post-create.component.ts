@@ -31,7 +31,7 @@ export class PostCreateComponent implements OnInit{
     
     }
 
-   ngOnInit(){
+   ngOnInit(){  
 
     this.form= new FormGroup({
         title: new FormControl(null,{

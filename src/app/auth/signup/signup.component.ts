@@ -22,7 +22,7 @@ export class SignupComponent{
         }
  
      // const authdata:AuthData={email:form.value.email , password :form.value.email};
-        this.authService.createUser(form.value.email ,form.value.email);
+        this.authService.createUser(form.value.email ,form.value.password);
         
         console.log(form.value);
     }

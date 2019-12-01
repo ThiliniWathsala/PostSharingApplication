@@ -1,17 +1,22 @@
 <mat-toolbar color="primary">
    <p> post sharing app</p>
    <span class="spacer"></span>
-    <span><a mat-button style="text-align:float-right" routerLink="/">My Message</a></span>
+ 
+    <span ><a *ngIf="userAuthenticated" mat-button style="text-align:float-right" routerLink="/">My Message</a></span>
+  
     <ul>
         
-        <li>
+        <li *ngIf="userAuthenticated">
             <a mat-button routerLink="/postcreate" routerLinkActive="mat-accent">New Post</a>
         </li>
-        <li>
+        <li *ngIf="!userAuthenticated">
             <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
         </li>
-        <li>
+        <li *ngIf="!userAuthenticated">
             <a mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup</a>
+        </li>
+        <li *ngIf="userAuthenticated">
+             <button mat-button>Logout</button>
         </li>
     </ul>
 </mat-toolbar>
