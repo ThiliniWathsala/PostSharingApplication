@@ -20,11 +20,9 @@ export class SignupComponent{
         if(form.invalid){
             return;
         }
- 
-     // const authdata:AuthData={email:form.value.email , password :form.value.email};
-        this.authService.createUser(form.value.email ,form.value.password);
-        
-        console.log(form.value);
+       this.isLoading=true;
+       this.authService.createUser(form.value.email ,form.value.password);
+       console.log(form.value);
     }
 
 }
