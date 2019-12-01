@@ -50,4 +50,11 @@ export class AuthService{
             })
         }
 
+        logOut(){
+            this.token=null;
+            this.isAuthenticated=false;
+            this.authStatusListener.next(false);
+        }
+
+
 }
