@@ -8,7 +8,7 @@ export class AuthInterceptor implements HttpInterceptor{  //here next is used to
 
     intercept(req:HttpRequest<any>,next:HttpHandler){           //call this methos for request leaving app    next is used as subscriber
         const authToken= this.authService.getToken();
-        console.log(authToken);
+        
         const auhtRequest=req.clone({
             headers:req.headers.set("Autherization","Bearer "+authToken)  //override the headers with autherization
         });   // get the copy of rquest
