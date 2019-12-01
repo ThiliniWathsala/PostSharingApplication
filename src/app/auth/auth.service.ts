@@ -7,16 +7,23 @@ import { Subject } from 'rxjs';
 
 export class AuthService{
     private token:string;
-    constructor(private http : HttpClient){}
     private authStatusListener=new Subject<boolean>();     //used to push aithenticate information
+    private isAuthenticated=false;
+    constructor(private http : HttpClient){}
+   
 
     getToken(){
         return this.token;
     }
 
+    isAuthenticatedSub(){
+        return this.isAuthenticated;
+    }
+
     getAuthstatusListener(){
         return this.authStatusListener.asObservable();  //so we cnt emmit ne values from other component
     }
+
 
         createUser(email : string , password : string){
             const authdata:AuthData={email : email , password : password};
@@ -34,7 +41,11 @@ export class AuthService{
                
                 const token=response.token //get the token fron response
                 this.token = token;
-                this.authStatusListener.next(true);
+                if(token){
+                    this.isAuthenticated=true;
+                    this.authStatusListener.next(true);
+                }
+                
                
             })
         }

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';    
 import { Posts } from '../post.model';
 import { PostService } from '../post.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -20,9 +21,9 @@ export class PostListComponent implements OnInit,OnDestroy{
 
  posts:Posts[]=[];
  postSub:Subscription;
-
-
-constructor(public postservice:PostService){
+ authListenersub = new Subscription;
+ userIsAuthenticated=false;
+constructor(public postservice:PostService,private authService:AuthService){
     
 }
 
@@ -32,10 +33,17 @@ ngOnInit(){  //meka image eka show krna method eka
     .subscribe((posts:Posts[])=>{
         this.posts=posts;    // assigns post array witch comes from post.serve.ts
     });
+
+    this.userIsAuthenticated = this.authService.isAuthenticatedSub();
+
+    this.authListenersub=this.authService.getAuthstatusListener().subscribe(isAuthenticated=>{
+         this.userIsAuthenticated=isAuthenticated;
+    })
 }
 
 ngOnDestroy(){
     this.postSub.unsubscribe();  // this is remove the subscrioption and prevent memory leaks
+    this.authListenersub.unsubscribe();
 }
 
 onDelete(postId:string){
